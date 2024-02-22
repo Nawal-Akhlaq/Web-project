@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Form Validation</title>
+        
+        <style>
+            form {
+                margin: 30px;
+                padding: 30px;
+                border: 2px solid #eecccc;
+                border-radius: 5px;
+                width: 300px;
+            }
+            input {
+                margin-bottom: 10px;
+                width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+            button {
+                padding: 10px 15px;
+                background-color: #aec4db;
+                color: #0e0d0d;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #6e5aa3;
+            }
+            .error {
+                color: red;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+
+
+    <body>
+        <!-- Sign In Form -->
+        <form id="signInForm">
+            <h2>Sign In</h2>
+            <input type="text" id="signInUsername" placeholder="Username">
+            <input type="password" id="signInPassword" placeholder="Password">
+            <button type="button" onclick="signIn()">Sign In</button>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signUpForm">
+            <h2>Sign Up</h2>
+            <input type="text" id="signUpUsername" placeholder="Username">
+            <input type="password" id="signUpPassword" placeholder="Password">
+            <input type="email" id="signUpEmail" placeholder="Email">
+            <input type="text" id="signUpFullName" placeholder="Full Name">
+            <input type="text" id="signUpAge" placeholder="Age">
+            <input type="text" id="signUpPhone" placeholder="Phone Number">
+            <input type="text" id="signUpAddress" placeholder="Address">
+            <input type="text" id="signUpRegion" placeholder="Region">
+            <button type="button" onclick="signUp()">Sign Up</button>
+        </form>
+
+        <script>
+            // Sign In Function
+            function signIn() {
+                var username = document.getElementById('signInUsername').value;
+                var password = document.getElementById('signInPassword').value;
+
+                // Validation
+                if (username.trim() === '' || password.trim() === '') {
+                    alert('Please enter username and password.');
+                    return;
+                }
+
+                alert('Signing in...');
+            }
+
+            // Sign Up Function
+            function signUp() {
+                var username = document.getElementById('signUpUsername').value;
+                var password = document.getElementById('signUpPassword').value;
+                var email = document.getElementById('signUpEmail').value;
+                var fullName = document.getElementById('signUpFullName').value;
+                var age = document.getElementById('signUpAge').value;
+                var phone = document.getElementById('signUpPhone').value;
+                var address = document.getElementById('signUpAddress').value;
+                var region = document.getElementById('signUpRegion').value;
+
+                // All blocks filled Validation
+                if (username.trim() === '' || password.trim() === '' || email.trim() === '' || fullName.trim() === '' || age.trim() === '' || phone.trim() === '' || address.trim() === '' || region.trim() === '') {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+                
+                // Fullname format validation
+                var fullNameRegex = /^[A-Za-z]+$/;
+                if (!fullNameRegex.test(fullName)) {
+                    alert('Please enter a valid full name (only alphabets allowed).');
+                    return;
+                }
+
+                // Password format validation
+                var phoneRegex = /^\d{4}-\d{7}$/;
+                if (!phoneRegex.test(phone)) {
+                    alert('Please enter a valid phone number in the format 0300-0000000.');
+                    return;
+                }
+                
+                // Email format validation
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+
+                // Age format and range validation
+                var ageNumber = parseInt(age);
+                if (isNaN(ageNumber) || ageNumber <= 10 || ageNumber >= 100) {
+                    alert('Please enter a valid age (between 11 and 99).');
+                    return;
+                }
+
+                // Phone number format validation
+                var phoneRegex = /^\d{4}-\d{7}$/;
+                if (!phoneRegex.test(phone)) {
+                    alert('Please enter a valid phone number in the format 0300-0000000.');
+                    return;
+                }
+
+                // Region format validation
+                var regionRegex = /^[A-Za-z]+$/;
+                if (!regionRegex.test(region)) {
+                    alert('Please enter a valid region (only alphabets allowed).');
+                    return;
+                }
+
+                // Perform sign up logic here
+                alert('Signing up...');
+            }
+
+        </script>
+
+    </body>
+</html>
