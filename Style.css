@@ -1,0 +1,167 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+/* Menu Bar/Nav Bar Section */
+
+#MenuBar {
+    position: fixed;
+    width: 100%;
+    background-color: #000000;
+}
+
+ul {
+    display: flex;
+}
+
+ul li {
+    list-style: none;
+    margin-left: 13%;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+ul li:hover {
+    background-color: rgb(185, 49, 49);
+    a {
+        color: black;
+    }
+}
+/* Ending of Nav Bar Section - > END */
+
+
+
+/* Banner Section CSS Code */
+#BannerSection {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+}
+
+#TextArea {
+    width: 50%;
+    margin: 10%;
+}
+
+.Intro {
+    font-size: 55px;
+}
+
+span {
+    color: rgb(88, 31, 31);
+}
+
+#MyImage {
+    width: 15%;
+    height: fit-content;
+    padding-right: 20%;
+    margin-top: 15%;
+}
+
+#CVBtn {
+    width: 30%;
+    height: 60px;
+    background-color: rgb(148, 53, 53);
+    font-weight: bolder;
+    font-size: large;
+    margin-top: 10%;
+    border: 3px solid rgb(148, 53, 53);
+}
+
+#CVBtn:hover {
+    background-color: black;
+    color: rgb(214, 193, 194);
+}
+
+/* Ending of Banner Section Code -> END */
+
+
+
+/* Get In Touch Section CSS Code */
+#GetInTouchSection {
+    width: 100%;
+    margin-top: 100px;
+    display: flex;
+}
+
+#designInfo {
+    width: 40%;
+    margin-left: 10%;
+}
+
+#touchForm {
+    width: 35%;
+    margin-left: 10%;
+    height: fit-content;
+    background-color: rgb(42, 41, 48);
+    padding-bottom: 50px;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], #TextMessage {
+    width: 80%;
+    margin-left: 10%;
+    height: 50px;
+    margin-top: 4%;
+    background-color: black;
+    border: 1px solid rgb(148, 53, 53);
+    color: white;
+}
+
+.touchC {
+    margin-left: 10%;
+}
+
+#TextMessage {
+    height: 200px;
+}
+
+input[type="submit"] {
+    width: 50%;
+    margin-left: 10%;
+    height: 40px;
+    background-color: rgb(148, 53, 53);
+    margin-top: 5%;
+    font-size: large;
+    font-weight: bolder;
+}
+
+input[type="submit"]:hover {
+    background-color: black;
+    color: rgb(148, 53, 53);
+    border: 3px solid rgb(148, 53, 53);
+}
+
+.review {
+    width: 46%;
+    margin: 1%;
+    height: 100px;
+    text-align: center;
+}
+
+sub {
+    display: flex;
+    margin: 0%;
+}
+
+footer {
+    display: flex;
+    width: 90%;
+    height: 60px;
+    margin-top: 200px;
+    background-color: rgb(22, 9, 9);
+    padding-left: 10%;
+}
+
+#github, #linkedin {
+    width: 50%;
+    margin-left: 200%;
+    margin-top: 20%;
+}
