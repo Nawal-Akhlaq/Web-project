@@ -1,0 +1,90 @@
+@keyframes slideIn {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 100% 0;
+    }
+}
+
+body.slide {
+    animation: slideIn 2s ease-in-out forwards;
+}
+
+
+nav {
+    background-color: #1f2730;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between; /* Align items at both ends */
+    align-items: center;
+}
+
+.logo {
+    margin-left: 10px; /* Add margin to separate logo from left edge */
+}
+
+.new-text {
+    flex-grow: 1; /* Allow the text to take up remaining space */
+    text-align: center; /* Center align the text */
+}
+
+.new-text p {
+    color: #d6dce2;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: larger;
+    font-weight: 100;
+}
+
+.search-container {
+    text-align: right;
+    margin-right: 10px; /* Add margin to separate from right edge */
+}
+
+#city-input, #search-btn {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+#search-btn {
+    cursor: pointer;
+}
+
+#weather-info {
+    font-size: 1.2em;
+    margin-top: 20px; /* Add margin to separate from navigation */
+    text-align: center;
+    color:antiquewhite;
+}
+
+.weather-icon {
+    width: 100px;
+    height: 100px;
+}
+body {
+    background-image: url('c:/Users/tayya/Desktop/gradient.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+body.rainy {
+    background-image: url('c:/Users/tayya/Desktop/rainy.jpg');
+}
+
+body.cloudy {
+    background-image: url('c:/Users/tayya/Desktop/cloudy.jpg');
+}
+
+body.sunny {
+    background-image: url('c:/Users/tayya/Desktop/sunny.jpg');
+}
+
+body.cold {
+    background-image: url('c:/Users/tayya/Desktop/cold.jpg');
+}
+
+body.smoke {
+    background-image: url('c:/Users/tayya/Desktop/smoke.jpg');
+}
