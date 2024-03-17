@@ -63,28 +63,28 @@ nav {
     height: 100px;
 }
 body {
-    background-image: url('c:/Users/tayya/Desktop/gradient.jpg');
+    background-image: url('Images/gradient.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
 
 body.rainy {
-    background-image: url('c:/Users/tayya/Desktop/rainy.jpg');
+    background-image: url('Images/rainy.jpg');
 }
 
 body.cloudy {
-    background-image: url('c:/Users/tayya/Desktop/cloudy.jpg');
+    background-image: url('Images/cloudy.jpg');
 }
 
 body.sunny {
-    background-image: url('c:/Users/tayya/Desktop/sunny.jpg');
+    background-image: url('Images/sunny.jpg');
 }
 
 body.cold {
-    background-image: url('c:/Users/tayya/Desktop/cold.jpg');
+    background-image: url('Images/cold.jpg');
 }
 
 body.smoke {
-    background-image: url('c:/Users/tayya/Desktop/smoke.jpg');
+    background-image: url('Images/smoke.jpg');
 }
