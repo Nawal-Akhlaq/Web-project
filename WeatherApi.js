@@ -18,33 +18,35 @@ const getWeatherData = async (cityName) => {
 };
 
 const displayWeather = (data) => {
-    const city = data.name;
-    const temp = Math.round(data.main.temp - 273.15); // Convert Kelvin to Celsius
-    const description = data.weather[0].description;
-    const iconCode = data.weather[0].icon;
-    const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  const city = data.name;
+  const temp = Math.round(data.main.temp - 273.15); // Convert Kelvin to Celsius
+  const description = data.weather[0].description;
+  const iconCode = data.weather[0].icon;
+  const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
-    let bodyClass = "";
-    if (description.includes("rain")) {
-        bodyClass = "rainy";
-    } else if (description.includes("cloud")) {
-        bodyClass = "cloudy";
-    } else if (description.includes("clear")) {
-        bodyClass = "sunny";
-    } else if (description.includes("smoke")) {
-        bodyClass = "smoke";
-    } else {
-        bodyClass = "cold";
-    }
+  let bodyClass = "";
+  if (description.includes("rain")) {
+      bodyClass = "rainy";
+  } else if (description.includes("cloud")) {
+      bodyClass = "cloudy";
+  } else if (description.includes("clear")) {
+      bodyClass = "sunny";
+  } else if (description.includes("smoke")) {
+      bodyClass = "smoke";
+  } else {
+      bodyClass = "cold";
+  }
 
-    document.body.className = bodyClass + " slide";
+  document.body.classList.remove("slide"); // Remove the existing animation class
+  void document.body.offsetWidth; // Trigger reflow to restart the animation
+  document.body.classList.add(bodyClass, "slide"); // Add the new animation class
 
-    weatherInfo.innerHTML = `
-        <h2>${city}</h2>
-        <p>Temperature: ${temp}°C</p>
-        <p>Description: ${description}</p>
-        <img class="weather-icon" src="${iconUrl}" alt="Weather Icon">
-    `;
+  weatherInfo.innerHTML = `
+      <h2>${city}</h2>
+      <p>Temperature: ${temp}°C</p>
+      <p>Description: ${description}</p>
+      <img class="weather-icon" src="${iconUrl}" alt="Weather Icon">
+  `;
 };
   
 

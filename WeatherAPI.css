@@ -1,14 +1,14 @@
-@keyframes slideIn {
+@keyframes fadeIn {
     from {
-        background-position: 0 0;
+        opacity: 0;
     }
     to {
-        background-position: 100% 0;
+        opacity: 1;
     }
 }
 
-body.slide {
-    animation: slideIn 2s ease-in-out forwards;
+image.fadeIn {
+    animation: fadeIn 2s linear forwards;
 }
 
 
@@ -62,11 +62,12 @@ nav {
     width: 100px;
     height: 100px;
 }
+
 body {
-    background-image: url('Images/gradient.jpg');
+    background-image: url('Images/random.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    transition: background-image 0.5s ease; /* Smooth transition for background image change */
 }
 
 body.rainy {
