@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WPortfolio</title>
+
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+
+    <header id="MenuBar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Intro</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact Me</a></li>
+        </ul><hr>
+    </header>
+
+    <section id="BannerSection">
+        <div id="TextArea">
+            <h1 class="Intro">HI, I'M Nawal Akhlaq! <br>CREATE <span id="AnimatedName">PLAYER</span></h1>
+        
+            <p>I'm a Computer Scientist with a mission to create web & android applications. I leverage my expertise in C++, C, Javascript and Python to build websites and andriod application. Explore my portfolio to discover how I can contribute to your needs</p>
+            <button id="CVBtn">Download CV 🛜</button>
+        </div>
+
+        <svg height="700" width="800" xmlns="http://www.w3.org/2000/svg">
+            
+            <image xlink:href="Images/My image.jpeg" width="750" height="450" x="25" y="195" />
+        </svg>
+        
+    </section>
+
+    <section id="GetInTouchSection">
+        <div id="designInfo">
+            <h1 style="font-size:60px;"><span style="font-size: 150px;color: rgb(134, 14, 14);">Success</span>    Story</h1>
+            <h2>Projects completed:</h2>
+            <p><ol type="i" style="margin: 5%;">
+                    <li style="font-size: medium;">
+                        Notepad(Basic)
+                    </li><br>
+                    <li style="font-size: medium;">
+                        Notepad(Advanced)
+                    </li><br>
+                    <li style="font-size: medium;">
+                        Tic Tac Toe
+                    </li><br>
+                    <li style="font-size: medium;">
+                        Battleship wars
+                    </li><br>
+                    <li style="font-size: medium;">
+                        Potion game
+                    </li><br>
+                </ol>
+            </p>
+
+            <sub>
+                <div class="review">
+                    <img src="Images/temp1.png" alt="Temp Image 1" style="width: 100%;">
+                    <h1 id="counter_1">0K+</h1>
+                    <h3>Complete Project</h3>
+                </div>
+                <div class="review">
+                    <img src="Images/temp2.png" alt="Temp Image 2" style="width: 100%;">
+                    <h1 id="counter_2">0+</h1>
+                    <h3>Client Review</h3>
+                </div>
+            </sub>
+        </div>
+
+        <div id="touchForm">
+            <h1 class="touchC" style="font-size: 45px;">GET TOUCH ME?</h1>
+            <p class="touchC">For your car we will do everything advice design in us repairs and maintenance We are the same preferred.</p>
+            
+            <form action="">
+                <input type="text" name="Name" id="Name" placeholder="Your Name" required>
+                <input type="email" name="Email" id="Email" placeholder="Your Email">
+                <input type="tel" name="Phone" id="Phone" required pattern="[0-9]{4}-[0-9]{7}" placeholder="Your Phone Number">
+                <textarea name="TextMessage" id="TextMessage" cols="30" rows="10" placeholder="Message"></textarea>
+                <input type="submit" value="Submit" onclick="Submit()">
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>All Copyright reserved ™️</p>
+        <a href="https://github.com/Nawal-Akhlaq" target="_blank"><img src="images/GithubImage.png" alt="Github Link" id="github"></a>
+        <a href="https://www.linkedin.com/in/nawal-akhlaq-2610b7244/" target="_blank"><img src="images/LinkedInImage.png" alt="LinkedIn Link" id="linkedin"></a>
+    </footer>
+
+
+    <script src="Script.js"></script>
+</body>
+</html>
