@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAMIFY - Gaming Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('abc.jpeg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+    .header {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    .logo {
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .buttons {
+      display: flex;
+    }
+    .buttons button {
+      padding: 8px 16px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4b0606;
+      color: white;
+      font-size: 14px;
+    }
+    .buttons button:first-child {
+      margin-left: 0;
+    }
+    .buttons button:hover {
+      background-color: #3c0409;
+    }
+    .container {
+      text-align: center;
+      margin-top: 20%;
+    }
+    .container h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .container p {
+      font-size: 24px;
+      margin-bottom: 40px;
+    }
+    .container button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #431102;
+      color: white;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+    .container button:hover {
+      background-color: #490905;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .options img {
+      width: 100px;
+      margin: 0 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo"><u>GAMIFY</u></div>
+    <div class="buttons">
+      <a href="index.html"><button style=" margin-right: 20px;">Sign Up</button></a>
+      <a href="index.html"><button style=" margin-right: 50px;" >Sign In</button></a>  
+    </div>
+  </div>
+
+  <div class="overlay">
+    <div class="container">
+      <h1>WELCOME</h1>
+      <p>TO GAMIFY</p>
+      <button id="getStartedBtn">GET STARTED</button>
+    </div>
+  </div>
+
+  <script>
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    getStartedBtn.addEventListener('click', () => {
+      window.location.href = 'whos_there.html';
+    });
+  </script>
+</body>
+</html>

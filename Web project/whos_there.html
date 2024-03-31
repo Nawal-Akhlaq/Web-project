@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAMIFY - Who's There?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2%;
+    }
+    .options a {
+      text-decoration: none;
+      color: inherit;
+      text-align: center;
+      margin: 0 20px;
+    }
+    .options img {
+      width: 100px;
+      margin-bottom: 5px; 
+      cursor: pointer;
+    }
+    .container {
+      text-align: center;
+      margin-top: 10%;
+    }
+    .container button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #431102;
+      color: white;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+    .container button:hover {
+      background-color: #490905;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style=" margin-bottom: 50px; ">WHO'S THERE?</h1>
+    <div class="options">
+      <a href="index.html">
+        <img src="admin.png" alt="Admin">
+        <p>Admin</p>
+      </a>
+      <a href="index.html">
+        <img src="user.png" alt="User">
+        <p>User</p>
+      </a>
+    </div>
+    <button id="goBackBtn">GO BACK</button>
+  </div>
+
+  <script>
+    const goBackBtn = document.getElementById('goBackBtn');
+    goBackBtn.addEventListener('click', () => {
+      window.location.href = 'landing.html';
+    });
+  </script>
+</body>
+</html>
