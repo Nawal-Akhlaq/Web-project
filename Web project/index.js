@@ -183,6 +183,21 @@ app.post('/add-participant', async (req, res) => {
       res.status(500).send('Internal server error');
   }
 });
+
+app.get('/games/:genre', async (req, res) => {
+    try {
+        const { genre } = req.params;
+
+        // Retrieve games based on genre from the database
+        const [rows] = await connection.query('SELECT * FROM games WHERE genre = ?', [genre]);
+
+        res.status(200).json(rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+    }
+});
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
