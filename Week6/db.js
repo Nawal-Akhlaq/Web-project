@@ -23,22 +23,13 @@ pool.getConnection((err, connection) => {
             process.exit(1);
         }
         console.log('Database created');
-        
+
         connection.query("CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), email VARCHAR(255) UNIQUE, password VARCHAR(255))", (err) => {
             if (err) {
                 console.error('Error creating users table:', err);
                 process.exit(1);
             }
             console.log('Users table created');
-            connection.release();
-        });
-
-        connection.query("CREATE TABLE IF NOT EXISTS Games (name VARCHAR(255), events VARCHAR(255))", (err) => {
-            if (err) {
-                console.error('Error creating table:', err);
-                process.exit(1);
-            }
-            console.log('Table created');
             connection.release();
         });
     });
