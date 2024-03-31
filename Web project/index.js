@@ -71,15 +71,15 @@ function isAdmin(req, res, next) {
 
 app.post('/addGame', isAdmin, async (req, res) => {
   try {
-      const { name, description } = req.body;
+      const { name, description, genre } = req.body;
 
       // Basic validation
-      if (!name || !description) {
+      if (!name || !description || !genre) {
           return res.status(400).send('Please provide name and description for the game');
       }
 
       // Insert game into database
-      await connection.query('INSERT INTO games (name, description) VALUES (?, ?)', [name, description]);
+      await connection.query('INSERT INTO games (name, description, genre) VALUES (?, ?, ?)', [name, description, genre]);
 
       res.status(201).send('Game added successfully');
   } catch (err) {
@@ -100,7 +100,7 @@ app.post('/add-event', async (req, res) => {
       }
 
       // Insert event into database
-      await connection.query('INSERT INTO event (game_id, event_name, description, event_date, event_time, end_date, end_time, max_participants) VALUES (?, ?, ?, ?, ?, ?, ?)', [gameId, eventName, description, startDate, startTime, endDate, endTime, maxParticipants]);
+      await connection.query('INSERT INTO event (game_id, event_name, description, event_date, event_time, end_date, end_time, max_participants) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [gameId, eventName, description, startDate, startTime, endDate, endTime, maxParticipants]);
 
       res.status(201).send('Event added successfully');
   } catch (err) {

@@ -48,7 +48,7 @@ pool.getConnection((err, connection) => {
                     }
                     console.log('Users table created');
 
-                    connection.query("CREATE TABLE IF NOT EXISTS games (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), description TEXT)", (err) => {
+                    connection.query("CREATE TABLE IF NOT EXISTS games (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), description TEXT, genre VARCHAR(255))", (err) => {
                         if (err) {
                             console.error('Error creating games table:', err);
                             process.exit(1);
