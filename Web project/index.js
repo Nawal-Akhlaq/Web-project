@@ -76,7 +76,13 @@ function isAdmin(req, res, next) {
     }
     next();
 }
-  
+
+function isManager(req, res, next) {
+    if (req.session.userId && req.body.role !== 'eventManager') {
+        return res.status(403).send('Only Event Managers can add events');
+    }
+    next();
+}
 app.post('/addGame', isAdmin, async (req, res) => {
     try {
         const { idgames, name, description, genre } = req.body;
@@ -99,17 +105,10 @@ app.post('/addGame', isAdmin, async (req, res) => {
         res.status(500).send('Internal server error');
     }
 });
-app.post('/addEvent', async (req, res) => {
+app.post('/addEvent', isManager,async (req, res) => {
     try {
         const { eventid, eventName, description, startdate, enddate } = req.body;
-        const { email } = req.user; // Assuming req.user contains the email of the logged-in user
-  
-        // Check if user is an eventManager
-        const user = await getUserByEmail(email);
-        if (!user || user.role !== 'eventManager') {
-            return res.status(403).send('Only event managers can add events');
-        }
-  
+        const connection = await db.getConnection();
         // Insert event into database
         await connection.query('INSERT INTO events (idevents, event_name, description, start_date, end_date) VALUES (?, ?, ?, ?, ?)', [eventid, eventName, description, startdate, enddate]);
   
