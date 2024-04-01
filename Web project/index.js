@@ -1,213 +1,126 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt'); // For password hashing
-
+const bcrypt = require('bcrypt');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const connection = require('./db');
+const db = require('./db');
+const mysql = require('mysql2/promise');
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.post('/signup', async (req, res) => {
-  try {
-      const { name, email, password } = req.body;
+    const name = req.body.name;
+    const email = req.body.email;
+    const idusers = req.body.idusers;
+    const role = req.body.role;
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    try {
+        const connection = await db.getConnection();
+        const sqlSearch = "SELECT * FROM users WHERE name = ?";
+        const search_query = mysql.format(sqlSearch, [name]);
+        const sqlInsert = "INSERT INTO users (idusers, name, password, email, role) VALUES (?,?,?,?,?)"; // Adjust this query to match your table structure
+        const insert_query = mysql.format(sqlInsert, [idusers, name, hashedPassword, email, role]);
 
-      // Basic validation
-      if (!name || !email || !password) {
-          return res.status(400).send('Please provide name, email, and password');
-      }
-
-      // Check for existing user
-      const existingUser = await checkExistingUser(email);
-      if (existingUser) {
-          return res.status(409).send('Email already in use');
-      }
-
-      // Hash password with bcrypt
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Insert user into database
-      await connection.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword]);
-
-      res.status(201).send('User created successfully');
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-  }
+        const [result] = await connection.query(search_query);
+        console.log("------> Search Results");
+        console.log(result.length);
+        if (result.length !== 0) {
+            connection.release();
+            console.log("------> User already exists");
+            res.sendStatus(409);
+        } else {
+            await connection.query(insert_query);
+            connection.release();
+            console.log("--------> Created new User");
+            res.sendStatus(201);
+        }
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
 });
 
 app.post('/login', async (req, res) => {
-  try {
-      const { email, password } = req.body;
-
-      // Retrieve user from database
-      const user = await getUserByEmail(email);
-
-      if (!user) {
-          return res.status(401).send('Invalid email or password');
-      }
-
-      // Compare password with hashed password from database
-      const passwordMatch = await bcrypt.compare(password, user.password);
-
-      if (passwordMatch) {
-          // Successful login
-          res.status(200).send('Login successful');
-      } else {
-          res.status(401).send('Invalid email or password');
-      }
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-  }
-});
-function isAdmin(req, res, next) {
-  if (req.body.role !== 'admin') {
-      return res.status(403).send('Only admins can add games');
-  }
-  next();
-}
-
-app.post('/addGame', isAdmin, async (req, res) => {
-  try {
-      const { name, description, genre } = req.body;
-
-      // Basic validation
-      if (!name || !description || !genre) {
-          return res.status(400).send('Please provide name and description for the game');
-      }
-
-      // Insert game into database
-      await connection.query('INSERT INTO games (name, description, genre) VALUES (?, ?, ?)', [name, description, genre]);
-
-      res.status(201).send('Game added successfully');
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-  }
-});
-
-app.post('/add-event', async (req, res) => {
-  try {
-      const { gameId, eventName, description, startDate, startTime, endDate, endTime, maxParticipants } = req.body;
-      const { email } = req.user; // Assuming req.user contains the email of the logged-in user
-
-      // Check if user is an eventManager
-      const user = await getUserByEmail(email);
-      if (!user || user.role !== 'eventManager') {
-          return res.status(403).send('Only event managers can add events');
-      }
-
-      // Insert event into database
-      await connection.query('INSERT INTO event (game_id, event_name, description, event_date, event_time, end_date, end_time, max_participants) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [gameId, eventName, description, startDate, startTime, endDate, endTime, maxParticipants]);
-
-      res.status(201).send('Event added successfully');
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-  }
-});
-
-app.delete('/delete-event/:eventId', async (req, res) => {
-  try {
-      const { eventId } = req.params;
-      const { email } = req.user; // Assuming req.user contains the email of the logged-in user
-
-      // Check if user is an eventManager
-      const user = await getUserByEmail(email);
-      if (!user || user.role !== 'eventManager') {
-          return res.status(403).send('Only event managers can delete events');
-      }
-
-      // Delete event from database
-      const result = await connection.query('DELETE FROM event WHERE id = ?', [eventId]);
-
-      if (result.affectedRows === 0) {
-          return res.status(404).send('Event not found');
-      }
-
-      res.status(200).send('Event deleted successfully');
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-  }
-});
-
-app.put('/update-event/:eventId', async (req, res) => {
-  try {
-      const { eventId } = req.params;
-      const { email } = req.user; // Assuming req.user contains the email of the logged-in user
-      const { description, startTime, endTime, maxParticipants } = req.body;
-
-      // Check if user is an eventManager
-      const user = await getUserByEmail(email);
-      if (!user || user.role !== 'eventManager') {
-          return res.status(403).send('Only event managers can update events');
-      }
-
-      // Update event details in the database
-      const result = await connection.query(
-          'UPDATE event SET description = ?, start_time = ?, end_time = ? WHERE id = ?',
-          [description, startTime, endTime, eventId]
-      );
-
-      if (result.affectedRows === 0) {
-          return res.status(404).send('Event not found');
-      }
-
-      res.status(200).send('Event details updated successfully');
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-  }
-});
-
-app.post('/add-participant', async (req, res) => {
-  try {
-      const { eventId, name, email } = req.body;
-      const { email: userEmail } = req.user; // Assuming req.user contains the email of the logged-in user
-
-      // Check if user is a participant
-      const user = await getUserByEmail(userEmail);
-      if (!user || user.role !== 'participant') {
-          return res.status(403).send('Only participants can be added to events');
-      }
-
-      // Insert participant into database
-      await connection.query('INSERT INTO participants (event_id, name, email) VALUES (?, ?, ?)', [eventId, name, email]);
-
-      res.status(201).send('Participant added successfully');
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
-  }
-});
-
-app.get('/games/:genre', async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
     try {
-        const { genre } = req.params;
+        const connection = await db.getConnection();
+        const sqlSearch = "SELECT * FROM users WHERE email = ?";
+        const search_query = mysql.format(sqlSearch, [email]);
+        const [userResult] = await connection.query(search_query);
 
-        // Retrieve games based on genre from the database
-        const [rows] = await connection.query('SELECT * FROM games WHERE genre = ?', [genre]);
+        if (userResult.length === 0) {
+            res.status(401).send('Invalid email or password');
+            return;
+        }
 
-        res.status(200).json(rows);
+        const user = userResult[0];
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (passwordMatch) {
+            // Store user ID in session
+            req.session.userId = user.idusers;
+            res.status(200).send('Login successful');
+        } else {
+            res.status(401).send('Invalid email or password');
+        }
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal server error');
     }
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+function isAdmin(req, res, next) {
+    if (req.session.userId && req.body.role !== 'admin') {
+        return res.status(403).send('Only admins can add games');
+    }
+    next();
+}
+  
+app.post('/addGame', isAdmin, async (req, res) => {
+    try {
+        const { idgames, name, description, genre } = req.body;
+
+        // Basic validation
+        if (!name || !description || !genre) {
+            return res.status(400).send('Please provide name, description, and genre for the game');
+        }
+
+        const connection = await db.getConnection(); // Establish database connection
+
+        // Insert game into database
+        await connection.query('INSERT INTO games (idgames, name, description, genre) VALUES (?, ?, ?, ?)', [idgames, name, description, genre]);
+
+        connection.release(); // Release the connection
+
+        res.status(201).send('Game added successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+    }
+});
+app.post('/addEvent', async (req, res) => {
+    try {
+        const { eventid, eventName, description, startdate, enddate } = req.body;
+        const { email } = req.user; // Assuming req.user contains the email of the logged-in user
+  
+        // Check if user is an eventManager
+        const user = await getUserByEmail(email);
+        if (!user || user.role !== 'eventManager') {
+            return res.status(403).send('Only event managers can add events');
+        }
+  
+        // Insert event into database
+        await connection.query('INSERT INTO events (idevents, event_name, description, start_date, end_date) VALUES (?, ?, ?, ?, ?)', [eventid, eventName, description, startdate, enddate]);
+  
+        res.status(201).send('Event added successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+    }
 });
 
-async function checkExistingUser(email) {
-  const [rows] = await connection.query('SELECT * FROM users WHERE email = ?', [email]);
-  return rows.length > 0 ? rows[0] : null;
-}
 
-async function getUserByEmail(email) {
-  const [rows] = await connection.query('SELECT * FROM users WHERE email = ?', [email]);
-  return rows.length > 0 ? rows[0] : null;
-}
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});
